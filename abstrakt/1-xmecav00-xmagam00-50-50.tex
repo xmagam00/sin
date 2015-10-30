@@ -1,0 +1,40 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Dokumentacia k zadaniu projektu do SIN
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt,a4paper,titlepage,final]{article}
+
+% cestina a fonty
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+% balicky pro odkazy
+\usepackage[bookmarksopen,colorlinks,plainpages=false,urlcolor=blue,unicode]{hyperref}
+\usepackage{url}
+% obrazky
+\usepackage[dvipdf]{graphicx}
+% velikost stranky
+\usepackage[top=3.5cm, left=2.5cm, text={17cm, 24cm}, ignorefoot]{geometry}
+
+\begin{document}
+
+   \begin{center}
+      \Large\textbf{Zadanie SIN}\\
+      \Large\textbf{Dopravní telematika}\\
+      \large\textit{xmecav00, xmagam00}
+   \end{center}
+  
+\section{Zadanie úlohy}
+Zadanie dopravnej telematiky bude obsahovať model model križovatky, v ktorej sa budú nachádzať 2 agenti, ktorí budú medzi sebou komunikovať a predávať si medzi sebou informácie. 
+
+\section{Špecifikácia modelu križovatky}
+Križovatka bude v tvare písmena \uv{X} a bude obsahova+t 4 semafory. Pred každým semaforom sa bude nachádzať semafor riadený agentom a 2 cestné pruhy, pričom 1 pruh bude umožňovať odbočenie doľava a druhý pruh bude umožňovať odbočenie doprava alebo prejdenie priamo skrz. križovatku. Semafor bude obsahovať jednoduché počítadlo, ktoré bude obsahovať množstvo aút, ktoré bude schopné prejsť na zelenú, rovnako aj čakaciu dobu, tj. dobu, po ktorej bude na danom semafore zelená a autá budú môcť prejsť križovatkou. Tento agent bude komunikovať s dalším agentom, ktorý bude kontrolovať prítomnosť slnečného žiarenia, inak povedaná, bude kontrolovať, či nastala tma a v tom prípade informuje predchádzajúceho agenta, aby vypol semafory na križovatke. 
+\section{Špefikácia modelu}
+Pre každým semaforom budú náhodne generované prichádzajúce autá, predpokladáme, že autá rešpektujú doprávne predpisy a prechádzajú len na zelenú farbu na semafore. Autá budú púšťané cez križovatku spôsobom, ktorí zabraňuje ich kríženiu. Tím sa myslí, že pokiaľ autá predchádzajú skrz križovatku tak semafor oproti neumožňuje odbočovať autám doľava, tak zabraňuje križovaniu. Križovatky budu postupne púšťané v smere hodinových ručičiek. Pri naskočení zelenej sa ukáže počítadlo, ktoré bude indikovať koľko aút prejde na zelenú. Po prejdený posledného auta sa na danom semafore zmení farba na červenú. Tento postup sa celý opakuje.
+
+\section{Implementácia}
+Implementáciu modelu bude prebiehať v dvojčlenom tíme, v ktorom sme si javovský systém Jade, ktorý odpovedá našim požiadavkám.
+\end{document}
+
