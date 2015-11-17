@@ -4,16 +4,15 @@ package agents.behaviour;
 import agents.CarGeneratorAgent;
 import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.OneShotBehaviour;
+
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
 import model.Car;
 import model.Direction;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+import agents.constants.Constants;
 /**
  * Created by Martin on 17. 11. 2015.
  */
@@ -30,15 +29,8 @@ public class CarGeneratorBehaviour extends TickerBehaviour {
 
     public void onTick() {
 
-        List<Car> cars = generateCars();
-
-
-        ACLMessage request = new ACLMessage(ACLMessage.REQUEST);
-    }
-
-    private List<Car> generateCars() {
         List<Car> cars = new ArrayList<Car>();
-        for (int j = 0; j < QUEUE_LENGTH; j++) {
+        for (int j = 1; j <= QUEUE_LENGTH; j++) {
             for (int i = 0; i < NUM_CARS; i++) {
                 Car car = new Car(CAR_ID, directionGenerator());
                 sendCar(j, car);
@@ -48,8 +40,6 @@ public class CarGeneratorBehaviour extends TickerBehaviour {
                 }
             }
         }
-
-        return cars;
     }
 
     private Direction directionGenerator() {
@@ -71,7 +61,7 @@ public class CarGeneratorBehaviour extends TickerBehaviour {
     private void sendCar(int queueType, Car car) {
         ACLMessage request = new ACLMessage(ACLMessage.REQUEST);
         request.setContent(car.getName());
-        request.addReceiver(new AID("B"+Integer.toString(queueType), AID.ISLOCALNAME));
+        request.addReceiver(new AID(Constants.AGENT_SEMAPHORE_NAME + Integer.toString(queueType), AID.ISLOCALNAME));
     }
 }
 
