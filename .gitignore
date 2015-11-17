@@ -1,3 +1,11 @@
 projekt/.idea
 projekt/out
 projekt/projekt.iml
+projekt/build.xml
+projekt/manifest.mf
+projekt/APDescription.txt
+projekt/MTPs-Main-Container.txt
+/projekt/jadeSIN/nbproject/private/
+/projekt/nbproject/private/
+/projekt/build/
+/projekt/nbproject/
