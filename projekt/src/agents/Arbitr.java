@@ -40,7 +40,7 @@ class RecvAcceptsBehaviour extends CyclicBehaviour{
   
   @Override
   public void action() {
-    //System.out.println("Karel receiving message: ");  
+    System.out.println("Karel receiving message: ");  
     ACLMessage msg = myAgent.receive();  
     if (msg == null){ 
       block();

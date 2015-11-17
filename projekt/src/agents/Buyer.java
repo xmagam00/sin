@@ -42,7 +42,7 @@ public class Buyer extends Agent{
     fsm.registerLastState(new OneShotBehaviour() {
         @Override
         public void action() {
-            //System.out.println(myAgent.getLocalName() + " ending.");
+            System.out.println(myAgent.getLocalName() + " ending.");
         }
     }, STATE_END);
     
@@ -70,7 +70,7 @@ class WaitForMessage extends OneShotBehaviour{
     ACLMessage msg = myAgent.blockingReceive();
     if(msg == null){
       exitValue = 0;
-     //System.out.println(myAgent.getLocalName() + " no message.");
+     System.out.println(myAgent.getLocalName() + " no message.");
     }
     else{
       if(msg.getPerformative() == ACLMessage.CANCEL){
@@ -80,7 +80,7 @@ class WaitForMessage extends OneShotBehaviour{
         int price = Integer.valueOf(msg.getContent());
         //buy item if the price is below or equal to maxPrice
         exitValue = (price <= maxPrice) ? price : 0; 
-        //System.out.println(myAgent.getLocalName() + " exitValue> " + Integer.toString(exitValue));
+        System.out.println(myAgent.getLocalName() + " exitValue> " + Integer.toString(exitValue));
       }
     }
   }
