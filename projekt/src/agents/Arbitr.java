@@ -24,6 +24,9 @@ public class Arbitr extends Agent{
   protected void setup() { 
     System.out.println(getAID().getName() + " is ready."); 
     
+    
+    
+    
     addBehaviour(new WakerBehaviour(this, 20000) {
       protected void onWake() {
         auctionBehav = new ParallelBehaviour(myAgent, ParallelBehaviour.WHEN_ANY);
