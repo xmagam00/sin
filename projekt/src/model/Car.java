@@ -13,29 +13,39 @@ public class Car {
     
     private Direction direction;
     private int id;
+
+
+
     private String name;
     
     public Car(int id , Direction d){
         this.id = id;
         this.direction = d;
-        String name = "auto" + id + this.getNameDirection(d);
+        String name = "auto" + id + " " + this.getNameDirection(d);
         this.name = name;
     }
-    
-    public int getID(){
-        return this.id;
-    }
-    
-    public void setID(int id){
-        this.id = id;
-    }
-    
     public Direction getDirection(){
         return this.direction;
     }
     
     public void setDirection(Direction d){
         this.direction = d;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     public String getNameDirection(Direction d){
@@ -51,5 +61,4 @@ public class Car {
         }
         return result;
     }
-    
 }
