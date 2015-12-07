@@ -10,6 +10,10 @@ package model;
  * @author Vojtech
  */
 public enum Direction{
-        RIGHT,
-        STRAIGHT
+        //RIGHT,
+        //STRAIGHT
+    NORTH,
+    EAST,
+    SOUTH,
+    WEST
 }
