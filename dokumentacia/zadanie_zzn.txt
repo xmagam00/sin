@@ -1,6 +1,0 @@
-zadania ulohy:
-
-1. vplyv parametrov na class{bankrupt,non-bankrupt}
-2. najvyznamejsi parameter ktory ovplyvnuje banrkupt
-3. analyza industry risk a urcit vplyv{percentualny}
-4. skupina parametrov

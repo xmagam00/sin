@@ -1,4 +1,4 @@
-NAME=1-xmecav00-xmagam00-50-50
+NAME=vysledok
 $(NAME).pdf: $(NAME).dvi
 	dvipdf $(NAME).dvi
 
