@@ -5,6 +5,7 @@
  */
 package agents;
 
+import agents.behaviour.ChangeStateOfSemaphore;
 import jade.core.Agent;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class RouteAgent extends Agent{
         firstCarQueue = new ArrayList<>();
         secondCarQueue = new ArrayList<>();
         //nejede zadne auto
-        stateOfSemaphor = Semaphor.RED;
+        setStateOfSemaphor(Semaphor.RED);
 
         Object args[] = getArguments();
         if (args.length < 1) {
@@ -76,6 +77,8 @@ public class RouteAgent extends Agent{
         }
 
         printAllCarsQueue();
+        
+        addBehaviour(new ChangeStateOfSemaphore());
     }
     
         
@@ -93,7 +96,7 @@ public class RouteAgent extends Agent{
     }
     
     public String createMessageOfStateRoute(){
-        String message = name+"-"+stateOfSemaphor+"-";
+        String message = name+"-"+getStateOfSemaphor()+"-";
         if(firstCarQueue.size() > 0){
             String parts[] = firstCarQueue.get(0).split(Pattern.quote("-"));
             String direstion = parts[1];
@@ -112,6 +115,20 @@ public class RouteAgent extends Agent{
         }
         
         return message;
+    }
+
+    /**
+     * @return the stateOfSemaphor
+     */
+    public Semaphor getStateOfSemaphor() {
+        return stateOfSemaphor;
+    }
+
+    /**
+     * @param stateOfSemaphor the stateOfSemaphor to set
+     */
+    public void setStateOfSemaphor(Semaphor stateOfSemaphor) {
+        this.stateOfSemaphor = stateOfSemaphor;
     }
     
 }

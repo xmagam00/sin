@@ -24,4 +24,6 @@ public enum Semaphor {
     public String getColorSemaphore(){
         return this.colorOfSemaphor;
     }
+    
+    
 }
