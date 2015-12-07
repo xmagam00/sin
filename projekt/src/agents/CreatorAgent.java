@@ -52,6 +52,8 @@ public class CreatorAgent extends Agent{
                 
                 addBehaviour(new StatisticBehaviour());
                 
+               // addBehaviour(new );
+                
                 
 	}
         
@@ -68,7 +70,7 @@ public class CreatorAgent extends Agent{
                 ACLMessage request1 = new ACLMessage(ACLMessage.PROPAGATE);
                 request1.setContent(second.toString());
                 request1.addReceiver(new AID("route2", AID.ISLOCALNAME));
-                myAgent.send(request);
+                myAgent.send(request1);
             }
 
         });
