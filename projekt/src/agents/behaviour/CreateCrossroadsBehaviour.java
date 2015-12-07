@@ -13,6 +13,7 @@ import jade.wrapper.StaleProxyException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import model.Semaphor;
 
 /**
  *
@@ -38,6 +39,8 @@ public class CreateCrossroadsBehaviour extends OneShotBehaviour {
                     //zadame info o tom, ze se jedna o prvniho cestu
                     listOfCar.add(0,"1");
                     
+                    int countOfCar1 = listOfCar.size();
+                    
                     String[] args1 = listOfCar.toArray(new String[listOfCar.size()]);
                     
                     AgentController agent = creator.getRouteAgentContainer().createNewAgent("route1", RouteAgent.class.getCanonicalName(), args1);
@@ -48,6 +51,8 @@ public class CreateCrossroadsBehaviour extends OneShotBehaviour {
                     listOfCar = createCars("E");
                     listOfCar.addAll(createCars("W"));
                     
+                    int countOfCar2 = listOfCar.size();
+                    
                     //zadame info o tom, ze se jedna o prvniho cestu
                     listOfCar.add(0,"2");
                     
@@ -56,6 +61,13 @@ public class CreateCrossroadsBehaviour extends OneShotBehaviour {
                     AgentController agent2 = creator.getRouteAgentContainer().createNewAgent("route2", RouteAgent.class.getCanonicalName(), args2);
                     agent2.start();
                     
+                    Semaphor redOrGreenFirst = Semaphor.RED;
+                    Semaphor redOrGreenSecond = Semaphor.RED;
+                    if(countOfCar1 > countOfCar2)
+                        redOrGreenFirst = Semaphor.GREEN;
+                    else
+                        redOrGreenSecond = Semaphor.GREEN;
+                    creator.sendDecisionSemaphor(redOrGreenFirst, redOrGreenSecond);
 
             } catch (StaleProxyException e) {
                     System.err.println("Error creating car agents");

@@ -133,6 +133,9 @@ public class CreatorAgent extends Agent{
         else
            redOrGreenSecond = Semaphor.GREEN;
         
+        countCarInFirstQueues = 0;
+        countCarInSecondQueues = 0;
+        
         sendDecisionSemaphor(redOrGreenFirst, redOrGreenSecond);
         
     }
