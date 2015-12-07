@@ -79,6 +79,8 @@ public class RouteAgent extends Agent{
         printAllCarsQueue();
         
         addBehaviour(new ChangeStateOfSemaphore());
+        addBehaviour(new CarReceiverBehaviour());
+
     }
     
         
@@ -130,5 +132,102 @@ public class RouteAgent extends Agent{
     public void setStateOfSemaphor(Semaphor stateOfSemaphor) {
         this.stateOfSemaphor = stateOfSemaphor;
     }
-    
+
+    public void addNewCarToList(int firstCar, int secondCar, String direction) {
+
+        if (firstCar != 0) {
+            addRemoveCar(0, direction);
+            String protocol = generateProtocolMessage(direction);
+            sendProtocol(protocol);
+        }
+
+        if (secondCar != 0) {
+            addRemoveCar(1,  direction);
+            String protocol = generateProtocolMessage(direction);
+            sendProtocol(protocol);
+        }
+    }
+
+    public void sendProtocol(String protocol) {
+        addBehaviour(new OneShotBehaviour() {
+            @Override
+            public void action() {
+                ACLMessage request = new ACLMessage(ACLMessage.INFORM);
+                request.setContent(protocol);
+                request.addReceiver(new AID("creator1", AID.ISLOCALNAME));
+                myAgent.send(request);
+            }
+        });
+    }
+
+    public void addRemoveCar(int queueType, String direction) {
+
+        //remove first item in list
+        if (stateOfSemaphor == Semaphor.GREEN && queueType == 0) {
+            List<String> list = new ArrayList<String>();
+            int index = 0;
+            for (String firstCarQueues: firstCarQueue) {
+                if (index != 0) {
+                    list.add(firstCarQueues);
+                }
+                index++;
+            }
+            firstCarQueue = new ArrayList<>();
+            for (String item: list) {
+                firstCarQueue.add(item);
+            }
+        }
+
+        //remove first item in list
+        if (stateOfSemaphor == Semaphor.GREEN && queueType == 1)) {
+            List<String> list = new ArrayList<String>();
+            int index = 0;
+            for (String secondCarQueues: secondCarQueue) {
+                if (index != 0) {
+                    list.add(firstCarQueues);
+                }
+                index++;
+            }
+            secondCarQueue = new ArrayList<>();
+            for (String item: list) {
+                secondCarQueue.add(item);
+            }
+
+        }
+
+        if (queueType == 0 && direction.equals("N")) {
+            String[] firstItem = firstCarQueue.get(firstCarQueue.size()-1).split("-");
+            firstCarQueue.add("car-N-" + firstItem[2]);
+
+        } else if(queueType == 1 && direction.equals("N") {
+            String[] firstItem = secondCarQueue.get(secondCarQueue.size()-1).split("-");
+            secondCarQueue.add("car-S-" + firstItem[2]);
+        }
+
+        if (queueType == 0 && direction.equals("E")) {
+            String[] firstItem = firstCarQueue.get(firstCarQueue.size()-1).split("-");
+            firstCarQueue.add("car-E-" + firstItem[2]);
+
+        } else if(queueType == 1 && direction.equals("E") {
+            String[] firstItem = secondCarQueue.get(secondCarQueue.size()-1).split("-");
+            secondCarQueue.add("car-W-" + firstItem[2]);
+        }
+
+    }
+
+    public String generateProtocolMessage(String direction) {
+        String protol = "";
+        if (direction.equals("N")) {
+            String[] firstItem = firstCarQueue.get(0).split("-");
+            String direction2 = "S";
+            String[] firstItem2 = secondtCarQueue.get(0).split("-");
+
+            protol  = name + "-" + stateOfSemaphor.toString() + "-" + direction + "-" + firstItem[2] + "-" + firstCarQueue.size() + "-" + direction2 + "-" + firstItem2[2] + "-" + secondCarQueue.size();
+
+        } else {
+            String direction2 = "W"
+            protol = name + "-" + stateOfSemaphor.toString() + "-" + direction + "-" + firstItem[2] + "-" + firstCarQueue.size() + "-" + direction2 + "-" + firstItem2[2] + "-" + secondCarQueue.size();
+        }
+        return protocol;
+    }
 }
