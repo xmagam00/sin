@@ -1,67 +1,44 @@
 package agents.behaviour;
 
+import agents.CreatorAgent;
+import agents.RouteAgent;
+import jade.core.behaviours.OneShotBehaviour;
+import jade.wrapper.AgentController;
+import jade.wrapper.StaleProxyException;
 
-import agents.CarGeneratorAgent;
-import jade.core.AID;
-import jade.core.Agent;
-
-import jade.core.behaviours.TickerBehaviour;
-import jade.lang.acl.ACLMessage;
-import model.Car;
-import model.Direction;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import agents.constants.Constants;
-/**
- * Created by Martin on 17. 11. 2015.
- */
-public class CarGeneratorBehaviour extends TickerBehaviour {
 
-    private final static int NUM_CARS = 10;
-    private final static int QUEUE_LENGTH = 4;
-    private static int CAR_ID = 0;
-    private final static int MAX_CAR_ID = 10000;
+@SuppressWarnings("serial")
+public class CarGeneratorBehaviour extends CyclicBehaviour {
 
-    public CarGeneratorBehaviour(Agent a, long period) {
-        super(a, period);
-    }
+    private static final int MAX_CARS = 1;
 
-    public void onTick() {
+    @Override
+    public void action() {
 
-        List<Car> cars = new ArrayList<Car>();
-        for (int j = 1; j <= QUEUE_LENGTH; j++) {
-            for (int i = 0; i < NUM_CARS; i++) {
-                Car car = new Car(CAR_ID, directionGenerator());
-                sendCar(j, car);
-                CAR_ID++;
-                if (CAR_ID == MAX_CAR_ID) {
-                    CAR_ID = 0;
-                }
-            }
+        try {
+
+            Random randomGenerator = new Random();
+
+            int randomInt = randomGenerator.nextInt(MAX_CARS);
+            int randomInt2 = randomGenerator.nextInt(MAX_CARS);
+
+            ACLMessage request = new ACLMessage(ACLMessage.REQUEST);
+            request.addReceiver(new AID("route1", AID.ISLOCALNAME));
+            request.setContent("N_" + randomInt + "_" + "S_" + randomInt2);
+            myAgent.send(request);
+
+            int randomInt = randomGenerator.nextInt(MAX_CARS);
+            int randomInt2 = randomGenerator.nextInt(MAX_CARS);
+            ACLMessage request = new ACLMessage(ACLMessage.REQUEST);
+            request.addReceiver(new AID("route2", AID.ISLOCALNAME));
+            request.setContent("E_" + randomInt + "_" + "W_" + randomInt2);
+            myAgent.send(request);
+
+        } catch (StaleProxyException ex) {
+            e.printStackTrace();
         }
-    }
-
-    private Direction directionGenerator() {
-        Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(1);
-        Direction direction = Direction.RIGHT;
-        switch (randomInt) {
-            case 0:
-                direction = Direction.STRAIGHT;
-                break;
-            case 1:
-                direction = Direction.RIGHT;
-                break;
-
-        }
-        return direction;
-    }
-
-    private void sendCar(int queueType, Car car) {
-        ACLMessage request = new ACLMessage(ACLMessage.REQUEST);
-        request.setContent(car.getName());
-        request.addReceiver(new AID(Constants.AGENT_SEMAPHORE_NAME + Integer.toString(queueType), AID.ISLOCALNAME));
     }
 }
-
