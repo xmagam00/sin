@@ -24,6 +24,11 @@ public enum Semaphor {
     public String getColorSemaphore(){
         return this.colorOfSemaphor;
     }
+
+    @Override
+    public String toString() {
+        return colorOfSemaphor;
+    }
     
     
 }

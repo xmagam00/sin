@@ -5,8 +5,12 @@
  */
 package agents;
 
+import agents.behaviour.CarReceiverBehaviour;
 import agents.behaviour.ChangeStateOfSemaphore;
+import jade.core.AID;
 import jade.core.Agent;
+import jade.core.behaviours.OneShotBehaviour;
+import jade.lang.acl.ACLMessage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -79,6 +83,8 @@ public class RouteAgent extends Agent{
         printAllCarsQueue();
         
         addBehaviour(new ChangeStateOfSemaphore());
+        addBehaviour(new CarReceiverBehaviour());
+
     }
     
         
@@ -130,5 +136,143 @@ public class RouteAgent extends Agent{
     public void setStateOfSemaphor(Semaphor stateOfSemaphor) {
         this.stateOfSemaphor = stateOfSemaphor;
     }
-    
+
+    public void addNewCarToList(int firstCar, int secondCar, String direction) {
+        
+        System.out.println("name agent: " + name);
+        if (firstCar != 0) {
+            addRemoveCar(0, direction);
+            String protocol = generateProtocolMessage(direction);
+            sendProtocol(protocol);
+        }
+
+        if (secondCar != 0) {
+            addRemoveCar(1,  direction);
+            String protocol = generateProtocolMessage(direction);
+            sendProtocol(protocol);
+        }
+    }
+
+    public void sendProtocol(String protocol) {
+        addBehaviour(new OneShotBehaviour() {
+            @Override
+            public void action() {
+                System.out.println("name :"  + name + " protocol: " + protocol);
+                ACLMessage request = new ACLMessage(ACLMessage.INFORM);
+                request.setContent(protocol);
+                request.addReceiver(new AID("creator1", AID.ISLOCALNAME));
+                myAgent.send(request);
+            }
+        });
+    }
+
+    public void addRemoveCar(int queueType, String direction) {
+
+        //remove first item in list
+        if (stateOfSemaphor == Semaphor.GREEN && queueType == 0 && firstCarQueue.size() > 0) {
+            List<String> list = new ArrayList<String>();
+            int index = 0;
+            for (String firstCarQueues: firstCarQueue) {
+                if (index != 0) {
+                    list.add(firstCarQueues);
+                }
+                index++;
+            }
+            firstCarQueue = new ArrayList<>();
+            for (String item: list) {
+                firstCarQueue.add(item);
+            }
+        }
+
+        //remove first item in list
+        if (stateOfSemaphor == Semaphor.GREEN && queueType == 1 && secondCarQueue.size() > 0) {
+            List<String> list = new ArrayList<String>();
+            int index = 0;
+            for (String secondCarQueues: secondCarQueue) {
+                if (index != 0) {
+                    list.add(secondCarQueues);
+                }
+                index++;
+            }
+            secondCarQueue = new ArrayList<>();
+            for (String item: list) {
+                secondCarQueue.add(item);
+            }
+
+        }
+
+        if (queueType == 0 && direction.equals("N")) {
+            if (firstCarQueue.size() > 0) {
+            String[] firstItem = firstCarQueue.get(firstCarQueue.size()-1).split("-");
+               firstCarQueue.add("car-E-" + firstItem[2]);
+            } else {
+                firstCarQueue.add("car-N-" + 0);
+            }
+            
+
+        } else if(queueType == 1 && direction.equals("N")) {
+            if (secondCarQueue.size() > 0) {
+            String[] firstItem = secondCarQueue.get(secondCarQueue.size()-1).split("-");
+               secondCarQueue.add("car-S-" + firstItem[2]);
+            } else {
+                secondCarQueue.add("car-S-" + 0);
+            }
+            
+        }
+
+        if (queueType == 0 && direction.equals("E")) {
+             if (firstCarQueue.size() > 0) {
+            String[] firstItem = firstCarQueue.get(firstCarQueue.size()-1).split("-");
+             firstCarQueue.add("car-E-" + firstItem[2]);
+            } else {
+                firstCarQueue.add("car-E-" + 0);
+            }
+
+        } else if(queueType == 1 && direction.equals("E")) {
+            if (secondCarQueue.size() > 0) {
+            String[] firstItem = secondCarQueue.get(secondCarQueue.size()-1).split("-");
+               secondCarQueue.add("car-W-" + firstItem[2]);
+            } else {
+                secondCarQueue.add("car-W-" + 0);
+            }
+        }
+
+    }
+
+    public String generateProtocolMessage(String direction) {
+        String protocol = "";
+        
+        if (direction.equals("N")) {
+            //String[] firstItem = firstCarQueue.get(0).split("-");
+            String direction2 = "S";
+            String firstPart = "";
+            String secondPart = "";
+            if (firstCarQueue.size() > 0) {
+                String[] firstItem = firstCarQueue.get(0).split("-");
+                firstPart = direction + "-" + firstItem[2] + "-" + firstCarQueue.size();
+            }
+            if (secondCarQueue.size() > 0) {
+                   String[] firstItem2 = secondCarQueue.get(0).split("-");
+                   secondPart = direction2 + "-" + firstItem2[2] + "-" + secondCarQueue.size();
+            }
+         
+            protocol  = name + "-" + stateOfSemaphor.toString() + "-" + firstPart + "-" + secondPart;
+
+        } else {
+            String direction2 = "W";
+            String firstPart = "";
+            String secondPart = "";
+            if (firstCarQueue.size() > 0) {
+                String[] firstItem = firstCarQueue.get(0).split("-");
+                firstPart = direction + "-" + firstItem[2] + "-" + firstCarQueue.size();
+            }
+            if (secondCarQueue.size() > 0) {
+                   String[] firstItem2 = secondCarQueue.get(0).split("-");
+                   secondPart = direction2 + "-" + firstItem2[2] + "-" + secondCarQueue.size();
+            }
+         
+            protocol  = name + "-" + stateOfSemaphor.toString() + "-" + firstPart + "-" + secondPart;
+        }
+        return protocol;
+    }
 }
