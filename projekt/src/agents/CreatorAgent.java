@@ -160,14 +160,31 @@ public class CreatorAgent extends Agent {
         }
         //je pouze jedna fronta plna
         else if (route.length == 5) {
-            switch(route[2]){
-                case "E" : System.out.println("West:"); break;
-                case "W" : System.out.println("East:"); break;
-                case "N" : System.out.println("South:"); break;
-                case "S" : System.out.println("North:"); break;
-            }
             countFirstQueue = Integer.parseInt(route[4]);
-            printDataStateOfRoute(route[2], Integer.parseInt(route[3]), countFirstQueue);
+            switch(route[2]){
+                case "E" : {
+                    printDataStateOfRoute(route[2], Integer.parseInt(route[3]), countFirstQueue);
+                    System.out.println("West:");
+                    break;
+                } 
+                case "N" :{
+                    printDataStateOfRoute(route[2], Integer.parseInt(route[3]), countFirstQueue);
+                    System.out.println("South:"); 
+                    break;}
+                case "W" :{
+                    System.out.println("East:");
+                    printDataStateOfRoute(route[2], Integer.parseInt(route[3]), countFirstQueue);
+                    break;
+                } 
+                
+                case "S" : {
+                    System.out.println("North:");
+                    printDataStateOfRoute(route[2], Integer.parseInt(route[3]), countFirstQueue);
+                    break;
+                }
+            }
+            
+            
 
         } else if (route.length == 8) {
             countFirstQueue = Integer.parseInt(route[4]);
