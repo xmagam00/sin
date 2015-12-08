@@ -34,6 +34,7 @@ public class CreatorAgent extends Agent {
     private String dataOfSecondAgent;
     private int countCarInFirstQueues;
     private int countCarInSecondQueues;
+    private int finished;
 
 
     @Override
@@ -44,6 +45,7 @@ public class CreatorAgent extends Agent {
         setDataOfSecondAgent("");
         countCarInFirstQueues = 0;
         countCarInSecondQueues = 0;
+        setFinished(0);
 
         // vytvoreni kontejneru na auta, ktery si budeme pamatovat
         Profile p = new ProfileImpl();
@@ -147,7 +149,9 @@ public class CreatorAgent extends Agent {
         int countFirstQueue = 0;
         int countSecondQueue = 0;
 
-        if (route.length < 3) {
+        System.out.println("aha: " + route.length );
+        
+        if (route.length == 3) {
             if (route[0].equals("route1")) {
                 System.out.println("North\nSouth");
             } else {
@@ -155,11 +159,11 @@ public class CreatorAgent extends Agent {
             }
         }
         //je pouze jedna fronta plna
-        else if (route.length < 5) {
+        else if (route.length == 5) {
             countFirstQueue = Integer.parseInt(route[4]);
             printDataStateOfRoute(route[2], Integer.parseInt(route[3]), countFirstQueue);
 
-        } else {
+        } else if (route.length == 8) {
             countFirstQueue = Integer.parseInt(route[4]);
             countSecondQueue = Integer.parseInt(route[7]);
             //vytiskni prvni semafor
@@ -197,6 +201,20 @@ public class CreatorAgent extends Agent {
         for (int i = firstIndex; i < countOfCyrcles; ++i) {
             System.out.println("car-" + Direction + "-" + Integer.toString(i));
         }
+    }
+
+    /**
+     * @return the finished
+     */
+    public int getFinished() {
+        return finished;
+    }
+
+    /**
+     * @param finished the finished to set
+     */
+    public void setFinished(int finished) {
+        this.finished = finished;
     }
 
 }

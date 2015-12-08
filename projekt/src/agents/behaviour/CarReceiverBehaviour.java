@@ -22,11 +22,12 @@ public class CarReceiverBehaviour extends CyclicBehaviour {
 
     @Override
     public void action() {
-        System.out.println("Car [" + myAgent.getLocalName() + "] add car");
+        
         MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.REQUEST);
         ACLMessage msg = myAgent.receive(mt);
 
         if (msg != null) {
+            System.out.println("Car [" + myAgent.getLocalName() + "] add car" + msg.getContent());
             RouteAgent routeAgent = (RouteAgent)myAgent;
             String content = msg.getContent();
             String[] splitString = content.split("_");

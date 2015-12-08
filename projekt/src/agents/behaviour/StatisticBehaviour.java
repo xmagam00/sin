@@ -7,6 +7,7 @@ package agents.behaviour;
 
 import agents.CreatorAgent;
 import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import java.util.regex.Pattern;
@@ -24,6 +25,7 @@ public class StatisticBehaviour extends CyclicBehaviour{
             ACLMessage msg = myAgent.receive(mt);
 
             if (msg != null) {
+                System.out.println("statistic: " + myAgent.getLocalName());
                 CreatorAgent creator = (CreatorAgent) myAgent;
 
                 String msgContent = msg.getContent();
@@ -61,6 +63,9 @@ public class StatisticBehaviour extends CyclicBehaviour{
                 
                 if(!creator.getDataOfSecondAgent().isEmpty() && !creator.getDataOfFristAgent().isEmpty()){
                     creator.printStatistic();
+                }
+                else{
+                    
                 }
             }
 
