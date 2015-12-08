@@ -25,7 +25,7 @@ public class StatisticBehaviour extends CyclicBehaviour{
             ACLMessage msg = myAgent.receive(mt);
 
             if (msg != null) {
-                System.out.println("statistic: " + myAgent.getLocalName());
+                //System.out.println("statistic: " + myAgent.getLocalName());
                 CreatorAgent creator = (CreatorAgent) myAgent;
 
                 String msgContent = msg.getContent();
@@ -35,7 +35,7 @@ public class StatisticBehaviour extends CyclicBehaviour{
                 String partsOfMessage[] = msgContent.split(Pattern.quote("-"));
 
                 if (partsOfMessage.length < 2) {
-                    System.err.println("Error: Unknown incoming message:" + msgContent);
+                    //System.err.println("Error: Unknown incoming message:" + msgContent);
                     return;
                 }
                 
@@ -47,7 +47,7 @@ public class StatisticBehaviour extends CyclicBehaviour{
                     }
                     //neco jako, zmeny neprovadej
                     else{
-                        System.err.println("Error: 1 agent se znovu zeptal pred druhym agenterm drive:" + msgContent);
+                        //System.err.println("Error: 1 agent se znovu zeptal pred druhym agenterm drive:" + msgContent);
                     }
                 }
                 else if(partsOfMessage[0].equals("route2")){
@@ -57,7 +57,7 @@ public class StatisticBehaviour extends CyclicBehaviour{
                     }
                     //neco jako, zmeny neprovadej
                     else{
-                        System.err.println("Error: 2 agent se znovu zeptal pred druhym agenterm drive:" + msgContent);
+                        //System.err.println("Error: 2 agent se znovu zeptal pred druhym agenterm drive:" + msgContent);
                     }
                 }
                 

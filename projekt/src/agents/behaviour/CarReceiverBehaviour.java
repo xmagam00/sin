@@ -27,7 +27,7 @@ public class CarReceiverBehaviour extends CyclicBehaviour {
         ACLMessage msg = myAgent.receive(mt);
 
         if (msg != null) {
-            System.out.println("Car [" + myAgent.getLocalName() + "] add car" + msg.getContent());
+            //System.out.println("Car [" + myAgent.getLocalName() + "] add car" + msg.getContent());
             RouteAgent routeAgent = (RouteAgent)myAgent;
             String content = msg.getContent();
             String[] splitString = content.split("_");
@@ -37,7 +37,7 @@ public class CarReceiverBehaviour extends CyclicBehaviour {
                 routeAgent.addNewCarToList(getFirstQueue(), getSecondQueue(), splitString[0]);
 
             } else {
-                System.err.println("Wrong message type" + content);
+                //System.err.println("Wrong message type" + content);
             }
 
 

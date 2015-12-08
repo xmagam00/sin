@@ -25,14 +25,15 @@ public class RouteAgent extends Agent {
 
     private List<String> firstCarQueue;
     private List<String> secondCarQueue;
-
+    private int maxSizeOfQueue = 15; 
+    
     private String name;
 
     private Semaphor stateOfSemaphor;
 
     @Override
     protected void setup() {
-        System.out.println("route " + getAID().getName() + " is ready");
+        //System.out.println("route " + getAID().getName() + " is ready");
 
         firstCarQueue = new ArrayList<>();
         secondCarQueue = new ArrayList<>();
@@ -41,7 +42,7 @@ public class RouteAgent extends Agent {
 
         Object args[] = getArguments();
         if (args.length < 1) {
-            System.err.println("Unexpected arguments for CarAgent. Call with <src> <dst>");
+            //System.err.println("Unexpected arguments for CarAgent. Call with <src> <dst>");
             doDelete();
         }
 
@@ -76,7 +77,7 @@ public class RouteAgent extends Agent {
             }
         }
 
-        //printAllCarsQueue();
+        printAllCarsQueue();
 
         addBehaviour(new ChangeStateOfSemaphore());
         addBehaviour(new CarReceiverBehaviour());
@@ -84,12 +85,21 @@ public class RouteAgent extends Agent {
     }
 
     public void printAllCarsQueue() {
-        System.out.println("agent " + getAID().getName());
-        System.out.println("prrvni list");
+        if(name.equals("route1") ){
+            System.out.println("Initialization of first route:");
+            System.out.println("North:");
+        }
+        else{
+            System.out.println("Initialization of second route:");
+            System.out.println("East:");
+        }
         for (int i = 0; i < firstCarQueue.size(); i++) {
             System.out.println(firstCarQueue.get(i));
         }
-        System.out.println("druhy list");
+        if(name.equals("route1"))
+            System.out.println("South:");
+        else
+            System.out.println("West:");
         for (int i = 0; i < secondCarQueue.size(); i++) {
             System.out.println(secondCarQueue.get(i));
         }
@@ -138,18 +148,18 @@ public class RouteAgent extends Agent {
         removeCar(0, direction);
         removeCar(1, direction);
         
-        if (firstCar != 0) {
+        if (firstCar != 0 && firstCarQueue.size() < maxSizeOfQueue) {
             addCar(0, direction);
 
         }
 
-        if (secondCar != 0) {
+        if (secondCar != 0 && secondCarQueue.size() < maxSizeOfQueue) {
             addCar(1, direction);
 
         }
 
         String protocol = generateProtocolMessage(direction);
-        System.out.println(protocol);
+        //System.out.println(protocol);
         sendProtocol(protocol);
     }
 

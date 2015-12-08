@@ -72,7 +72,7 @@ public class CreateCrossroadsBehaviour extends OneShotBehaviour {
                     creator.sendDecisionSemaphor(redOrGreenFirst, redOrGreenSecond);
 
             } catch (StaleProxyException e) {
-                    System.err.println("Error creating car agents");
+                    //System.err.println("Error creating car agents");
                     e.printStackTrace();
             }
 	}

@@ -40,7 +40,7 @@ public class ChangeStateOfSemaphore extends CyclicBehaviour{
             RouteAgent agent = (RouteAgent) myAgent;
             
             Semaphor sem = Semaphor.valueOf(msg.getContent());
-            System.out.println("Car [" + myAgent.getLocalName() + "] get message about semaphore and type : " + sem  );
+            System.out.println("Car " + myAgent.getLocalName() + " have " + sem + " semaphore." );
             agent.setStateOfSemaphor(sem);
             
             //vytvor novou zpravu na generovani novych aut

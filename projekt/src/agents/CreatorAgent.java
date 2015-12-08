@@ -41,7 +41,7 @@ public class CreatorAgent extends Agent {
 
     @Override
     protected void setup() {
-        System.out.println("Creator " + getAID().getName() + " is ready");
+        System.out.println("Agent Creator is ready");
 
         setDataOfFristAgent("");
         setDataOfSecondAgent("");
@@ -126,8 +126,10 @@ public class CreatorAgent extends Agent {
     }
 
     public void printStatistic() {
+        
         String part1[] = dataOfFristAgent.split(Pattern.quote("-"));
         String part2[] = dataOfSecondAgent.split(Pattern.quote("-"));
+        System.out.println("Current state of crossroad:");
         prepareOfPrintingStatistic(part1);
         prepareOfPrintingStatistic(part2);
 
@@ -167,7 +169,7 @@ public class CreatorAgent extends Agent {
         int countFirstQueue = 0;
         int countSecondQueue = 0;
 
-        System.out.println("aha: " + route.length );
+        //System.out.println("aha: " + route.length );
         
         if (route.length == 3) {
             if (route[0].equals("route1")) {
