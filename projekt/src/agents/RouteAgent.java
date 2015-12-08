@@ -149,6 +149,7 @@ public class RouteAgent extends Agent {
         }
 
         String protocol = generateProtocolMessage(direction);
+        System.out.println(protocol);
         sendProtocol(protocol);
     }
 
@@ -257,14 +258,14 @@ public class RouteAgent extends Agent {
             String secondPart = "";
             if (firstCarQueue.size() > 0) {
                 String[] firstItem = firstCarQueue.get(0).split("-");
-                firstPart = direction + "-" + firstItem[2] + "-" + firstCarQueue.size();
+                firstPart = "-" + direction + "-" + firstItem[2] + "-" + firstCarQueue.size();
             }
             if (secondCarQueue.size() > 0) {
                 String[] firstItem2 = secondCarQueue.get(0).split("-");
-                secondPart = direction2 + "-" + firstItem2[2] + "-" + secondCarQueue.size();
+                secondPart = "-" + direction2 + "-" + firstItem2[2] + "-" + secondCarQueue.size();
             }
 
-            protocol = name + "-" + stateOfSemaphor.toString() + "-" + firstPart + "-" + secondPart;
+            protocol = name + "-" + stateOfSemaphor.toString()  + firstPart +  secondPart;
 
         } else {
             String direction2 = "W";
@@ -272,14 +273,14 @@ public class RouteAgent extends Agent {
             String secondPart = "";
             if (firstCarQueue.size() > 0) {
                 String[] firstItem = firstCarQueue.get(0).split("-");
-                firstPart = direction + "-" + firstItem[2] + "-" + firstCarQueue.size();
+                firstPart = "-" + direction + "-" + firstItem[2] + "-" + firstCarQueue.size();
             }
             if (secondCarQueue.size() > 0) {
                 String[] firstItem2 = secondCarQueue.get(0).split("-");
-                secondPart = direction2 + "-" + firstItem2[2] + "-" + secondCarQueue.size();
+                secondPart = "-" +direction2 + "-" + firstItem2[2] + "-" + secondCarQueue.size();
             }
 
-            protocol = name + "-" + stateOfSemaphor.toString() + "-" + firstPart + "-" + secondPart;
+            protocol = name + "-" + stateOfSemaphor.toString() + firstPart + secondPart;
         }
         return protocol;
     }

@@ -32,7 +32,7 @@ public class CarReceiverBehaviour extends CyclicBehaviour {
             String content = msg.getContent();
             String[] splitString = content.split("_");
             if ((splitString[3].equals("0") || splitString[3].equals("1")) && (splitString[1].equals("0") || splitString[1].equals("1"))) {
-                setFirstQueue(Integer.parseInt(splitString[3]));
+                setFirstQueue(Integer.parseInt(splitString[1]));
                 setSecondQueue(Integer.parseInt(splitString[3]));
                 routeAgent.addNewCarToList(getFirstQueue(), getSecondQueue(), splitString[0]);
 
