@@ -67,6 +67,8 @@ public class CreateCrossroadsBehaviour extends OneShotBehaviour {
                         redOrGreenFirst = Semaphor.GREEN;
                     else
                         redOrGreenSecond = Semaphor.GREEN;
+                    //poprve se budou odebirat auta, proto zmenime tuto hodnotu na 1
+                    creator.setCurrentGreenUsees(1);
                     creator.sendDecisionSemaphor(redOrGreenFirst, redOrGreenSecond);
 
             } catch (StaleProxyException e) {

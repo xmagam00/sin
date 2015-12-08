@@ -35,6 +35,8 @@ public class CreatorAgent extends Agent {
     private int countCarInFirstQueues;
     private int countCarInSecondQueues;
     private int finished;
+    private int cyclingOfGreen = 5;
+    private int currentGreenUsees;
 
 
     @Override
@@ -46,6 +48,8 @@ public class CreatorAgent extends Agent {
         countCarInFirstQueues = 0;
         countCarInSecondQueues = 0;
         setFinished(0);
+        
+        setCurrentGreenUsees(0);
 
         // vytvoreni kontejneru na auta, ktery si budeme pamatovat
         Profile p = new ProfileImpl();
@@ -131,16 +135,30 @@ public class CreatorAgent extends Agent {
         dataOfFristAgent = "";
         dataOfSecondAgent = "";
 
-        Semaphor redOrGreenFirst = Semaphor.RED;
-        Semaphor redOrGreenSecond = Semaphor.RED;
-        if (countCarInFirstQueues > countCarInSecondQueues)
-            redOrGreenFirst = Semaphor.GREEN;
-        else
-            redOrGreenSecond = Semaphor.GREEN;
+        Semaphor redOrGreenFirst ;
+        Semaphor redOrGreenSecond;
+        
+        //pokud se nebude menit barva semaforu
+        if(currentGreenUsees < cyclingOfGreen){
+            //predame prvni p
+            redOrGreenFirst = Semaphor.valueOf(part1[1]);
+            redOrGreenSecond = Semaphor.valueOf(part2[1]);
+            ++currentGreenUsees;
+        }
+        else{
+            currentGreenUsees=0;
+            redOrGreenFirst = Semaphor.RED;
+            redOrGreenSecond = Semaphor.RED;
+            if (countCarInFirstQueues > countCarInSecondQueues)
+                redOrGreenFirst = Semaphor.GREEN;
+            else
+                redOrGreenSecond = Semaphor.GREEN;
 
+            
+        }
+        
         countCarInFirstQueues = 0;
         countCarInSecondQueues = 0;
-        
         sendDecisionSemaphor(redOrGreenFirst, redOrGreenSecond);
 
     }
@@ -238,6 +256,20 @@ public class CreatorAgent extends Agent {
      */
     public void setFinished(int finished) {
         this.finished = finished;
+    }
+
+    /**
+     * @return the currentGreenUsees
+     */
+    public int getCurrentGreenUsees() {
+        return currentGreenUsees;
+    }
+
+    /**
+     * @param currentGreenUsees the currentGreenUsees to set
+     */
+    public void setCurrentGreenUsees(int currentGreenUsees) {
+        this.currentGreenUsees = currentGreenUsees;
     }
 
 }
